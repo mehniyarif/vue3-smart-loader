@@ -1,11 +1,12 @@
 <template>
-  <smart-loader></smart-loader>
+  <div id="smart-loader"></div>
 </template>
 
 <script>
-import SmartLoader from "@/components/SmartLoader"
 export default {
   name: "App",
-  components: {SmartLoader},
+  created(){
+    this.$spinner.fingerprint()
+  }
 };
 </script>
