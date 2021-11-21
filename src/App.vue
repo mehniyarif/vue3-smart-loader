@@ -6,7 +6,7 @@
 export default {
   name: "App",
   created(){
-    this.$spinner.fingerprint()
+    this.$spinner.radar()
   }
 };
 </script>

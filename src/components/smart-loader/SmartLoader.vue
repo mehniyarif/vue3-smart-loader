@@ -179,10 +179,18 @@ export default defineComponent({
     this.cnt = 0
     clearInterval(this.spinCounter)
   },
+  created(){
+    this.reactivity()
+  },
+  props:{
+    type:String,
+    options:Object,
+    destroy:Function
+  },
   data () {
     return {
       show:false,
-      spinnerType:null,
+      spinnerType:this.type,
       cnt:0,
       spinCounter:setInterval(() => {
         this.cnt +=1
@@ -191,104 +199,104 @@ export default defineComponent({
           flower:{
             duration:2500,
             size:70,
-            color:"var(--pg-fourth-color)"
+            color:"#ccc"
           },
           pixel:{
             duration:2000,
             size:70,
-            color:"var(--pg-fourth-color)"
+            color:"#ccc"
           },
           hollowDots:{
             duration:1000,
             size:15,
             num:3,
-            color:"var(--pg-fourth-color)"
+            color:"#ccc"
           },
           intersectingCircles:{
             duration:1200,
             size:70,
-            color:"var(--pg-fourth-color)"
+            color:"#ccc"
           },
           orbit:{
             duration:1200,
             size:55,
-            color:"var(--pg-fourth-color)"
+            color:"#ccc"
           },
           radar:{
             duration:2000,
             size:60,
-            color:"var(--pg-fourth-color)"
+            color:"#ccc"
           },
           scalingSquares:{
             duration:1250,
             size:65,
-            color:"var(--pg-fourth-color)"
+            color:"#ccc"
           },
           halfCircle:{
             duration:1000,
             size:60,
-            color:"var(--pg-fourth-color)"
+            color:"#ccc"
           } ,
           trinityRings:{
             duration:1500,
             size:66,
-            color:"var(--pg-fourth-color)"
+            color:"#ccc"
           } ,
           fulfillingSquare:{
             duration:4000,
             size:50,
-            color:"var(--pg-fourth-color)"
+            color:"#ccc"
           } ,
           circlesToRhombuses:{
             duration:1200,
             size:15,
             num:3,
-            color:"var(--pg-fourth-color)"
+            color:"#ccc"
           },
           semipolar:{
             duration:2000,
             size:65,
-            color:"var(--pg-fourth-color)"
+            color:"#ccc"
           } ,
           selfBuildingSquare:{
             duration:6000,
             size:40,
-            color:"var(--pg-fourth-color)"
+            color:"#ccc"
           } ,
           swappingSquares:{
             duration:1000,
             size:65,
-            color:"var(--pg-fourth-color)"
+            color:"#ccc"
           } ,
           fulfillingBouncingCircle:{
             duration:4000,
             size:60,
-            color:"var(--pg-fourth-color)"
+            color:"#ccc"
           },
           fingerprint:{
             duration:1500,
             size:64,
-            color:"var(--pg-fourth-color)"
+            color:"#ccc"
           } ,
           spring:{
             duration:3000,
             size:60,
-            color:"var(--pg-fourth-color)"
+            color:"#ccc"
           },
           atom:{
             duration:1000,
             size:60,
-            color:"var(--pg-fourth-color)"
+            color:"#ccc"
           },
           loopingRhombuses:{
             duration:2500,
             size:15,
-            color:"var(--pg-fourth-color)"
+            color:"#ccc"
           } ,
           breedingRhombus:{
             duration:2000,
             size:65,
-            color:"var(--pg-fourth-color)"
+            color:"#ccc"
           },
       },
       spinnerOptions:{
@@ -296,7 +304,7 @@ export default defineComponent({
             size:70,
             stopAfter:20,
             stopAfterText:"This process will take a little long",
-            color:"var(--pg-fourth-color)",
+            color:"#ccc",
             num:null
       },
       kebabNames:["flower","pixel","hollow-dots","intersecting-circles","orbit","radar","scaling-squares",
@@ -306,26 +314,21 @@ export default defineComponent({
       camelNames:["flower","pixel","hollowDots","intersectingCircles","orbit","radar","scalingSquares","halfCircle",
                         "trinityRings","fulfillingSquare","circlesToRhombuses","semipolar","selfBuildingSquare","swappingSquares",
                         "fulfillingBouncingCircle","fingerprint","spring","atom","loopingRhombuses","breedingRhombus"],
-      options: {
-        duration: 500
-      }
     }
   },
   methods: {
-    reactivity (type, options) {
+    reactivity () {
       this.cnt = 0
-      this.spinnerType = type
       this.show = true
-
       let fndIndex = this.kebabNames.findIndex(v => v == this.spinnerType)
       fndIndex = fndIndex ? fndIndex : 0
       let defaultOptions = {
-            duration: options && options.duration ? options.duration : this.defaultOptions[this.camelNames[fndIndex]].duration,
-            size: options && options.size ? options.size : this.defaultOptions[this.camelNames[fndIndex]].size,
-            color:options && options.color ? options.color : this.defaultOptions[this.camelNames[fndIndex]].color,
-            num: options && options.num ? options.num : this.defaultOptions[this.camelNames[fndIndex]].num,
-            stopAfter: options && options.stopAfter ? options.stopAfter : 20,
-            stopAfterText: options && options.stopAfterText ? options.stopAfterText : "This process will take a little long",
+            duration: this.options && this.options.duration ? this.options.duration : this.defaultOptions[this.camelNames[fndIndex]].duration,
+            size: this.options && this.options.size ? this.options.size : this.defaultOptions[this.camelNames[fndIndex]].size,
+            color:this.options && this.options.color ? this.options.color : this.defaultOptions[this.camelNames[fndIndex]].color,
+            num: this.options && this.options.num ? this.options.num : this.defaultOptions[this.camelNames[fndIndex]].num,
+            stopAfter: this.options && this.options.stopAfter ? this.options.stopAfter : 20,
+            stopAfterText: this.options && this.options.stopAfterText ? this.options.stopAfterText : "This process will take a little long",
       }
       this.spinnerOptions = defaultOptions
 
@@ -337,12 +340,11 @@ export default defineComponent({
       this.cnt = 0
 
        if(!visibility){
-         this.show = false
-         return
+          this.destroy()
        }
        
       setTimeout(() => {
-          this.show = false
+          this.destroy()
       }, visibility);
        
     },
@@ -350,7 +352,7 @@ export default defineComponent({
         window.location.reload()
     },
     turnOff(){
-      this.$spinner.close()
+      this.destroy()
     }
   }
 })
@@ -377,7 +379,7 @@ export default defineComponent({
        font-size: 17px;
        opacity: .7;
        margin-top: 10px;
-       color: var(--pg-fourth-color);
+       color: #ccc;
        font-weight: 600;
     }
 

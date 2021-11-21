@@ -1,14 +1,16 @@
 
 import { createApp } from 'vue';
-import   currLoadingApps from './SmartLoader.vue'
+import   Spinners from './SmartLoader.vue'
 
 
-function createLoading(props) {
+function createLoading(type, options, props) {
   const container = document.createElement('div');
   const loadingApp = createApp(
-      currLoadingApps,
+      Spinners,
     Object.assign(props, {
       destroy: destroyApp,
+      options: options,
+      type: type
     }),
   );
 
@@ -23,109 +25,86 @@ function createLoading(props) {
   return loadingApp;
 }
 
-let currLoadingApp;
+let Spinner;
 export default {
   install(app) {
-    const options = {};
-
-
-    function showLoading(props) {
-      const propsData = { ...options, ...props };
-      currLoadingApp = createLoading(propsData);
+    function showLoading(type, options, props) {
+      const propsData = { ...props };
+      Spinner = createLoading(type, options, propsData)
     }
 
 
-    const spinner = {
+    const spinnerObj = {
         flower: (options = {}) => {
-            currLoadingApp.reactivity("flower", options)
-            showLoading()
+            showLoading("flower", options)
         },
         pixel: (options = {}) => {
-            currLoadingApp.reactivity("pixel", options)
-            showLoading()
+            showLoading("pixel", options)
         },
         hollowDots: (options = {}) => {
-            currLoadingApp.reactivity("hollow-dots", options)
-            showLoading()
+            showLoading("hollow-dots", options)
         },
         intersectingCircles: (options = {}) => {
-            currLoadingApp.reactivity("intersecting-circles", options)
-            showLoading()
+            showLoading("intersecting-circles", options)
         },
         orbit: (options = {}) => {
-            currLoadingApp.reactivity("orbit", options)
-            showLoading()
+            showLoading("orbit", options)
         },
         radar: (options = {}) => {
-            currLoadingApp.reactivity("radar", options)
-            showLoading()
+            showLoading("radar", options)
         },
         scalingSquares: (options = {}) => {
-            currLoadingApp.reactivity("scaling-squares", options)
-            showLoading()
+            showLoading("scaling-squares", options)
         },
         halfCircle: (options = {}) => {
-            currLoadingApp.reactivity("half-circle", options)
-            showLoading()
+            showLoading("half-circle", options)
         },
         trinityRings: (options = {}) => {
-            currLoadingApp.reactivity("trinity-rings", options)
-            showLoading()
+            showLoading("trinity-rings", options)
         },
         fulfillingSquare: (options = {}) => {
-            currLoadingApp.reactivity("fulfilling-square", options)
-            showLoading()
+            showLoading("fulfilling-square", options)
         },
         circlesToRhombuses: (options = {}) => {
-            currLoadingApp.reactivity("circles-to-rhombuses", options)
-            showLoading()
+            showLoading("circles-to-rhombuses", options)
         },
         semipolar: (options = {}) => {
-            currLoadingApp.reactivity("semipolar", options)
-            showLoading()
+            showLoading("semipolar", options)
         },
         selfBuildingSquare: (options = {}) => {
-            currLoadingApp.reactivity("self-building-square", options)
-            showLoading()
+            showLoading("self-building-square", options)
         },
         swappingSquares: (options = {}) => {
-            currLoadingApp.reactivity("swapping-squares", options)
-            showLoading()
+            showLoading("swapping-squares", options)
         },
         fulfillingBouncingCircle: (options = {}) => {
-            currLoadingApp.reactivity("fulfilling-bouncing-circle", options)
-            showLoading()
+            showLoading("fulfilling-bouncing-circle", options)
         },
         fingerprint: (options = {}) => {
-            currLoadingApp.reactivity("fingerprint", options)
-            showLoading()
+            showLoading("fingerprint", options)
         },
         spring: (options = {}) => {
-            currLoadingApp.reactivity("spring", options)
-            showLoading()
+            showLoading("spring", options)
         },
         atom: (options = {}) => {
-            currLoadingApp.reactivity("atom", options)
-            showLoading()
+            showLoading("atom", options)
         },
         loopingRhombuses: (options = {}) => {
-            currLoadingApp.reactivity("looping-rhombuses", options)
-            showLoading()
+            showLoading("looping-rhombuses", options)
         },
         breedingRhombus: (options = {}) => {
-            currLoadingApp.reactivity("breeding-rhombus", options)
-            showLoading()
+            showLoading("breeding-rhombus", options)
         },
         close: () => {
-            currLoadingApp.destroyApp()
+            Spinner.destroyApp()
         }
     }
 
     // provide暴露
-    app.provide('$spinner', spinner);
+    app.provide('$spinner', spinnerObj);
 
     // Vue.prototype暴露
     
-    app.config.globalProperties.$spinner = spinner;
+    app.config.globalProperties.$spinner = spinnerObj;
   },
 };
