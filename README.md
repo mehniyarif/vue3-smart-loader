@@ -1,8 +1,11 @@
 # vue3-smart-loader
 
+
+## ***Importantly Note***
+*This is a newly developed package. So the stable version is not available for now.*
 ### For Preview Spinners
 => [Epic Spinners](https://epic-spinners.epicmax.co/) Package
-## Usages
+## **Usages**
 
 #### Import in main.js
 `import SmartLoader from "vue3-smart-loader"`
@@ -34,6 +37,11 @@
 * this.$spinner.loopingRhombuses()
 * this.$spinner.breedingRhombus()
 
+</br>
+</br>
+
+### **Parameters**
+</br>
 
 | Parameter Name |   Type  |                                                                Description                                                                |
 |:--------------:|:-------:|:-----------------------------------------------------------------------------------------------------------------------------------------:|
