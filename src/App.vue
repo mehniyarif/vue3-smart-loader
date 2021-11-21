@@ -1,12 +1,11 @@
 <template>
-  <div id="smart-loader"></div>
+  <div>
+    
+  </div>
 </template>
 
 <script>
 export default {
-  name: "App",
-  created(){
-    this.$spinner.radar()
-  }
+  name: "App"
 };
 </script>

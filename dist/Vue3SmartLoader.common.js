@@ -232,34 +232,36 @@ if (typeof window !== 'undefined') {
 // EXTERNAL MODULE: external {"commonjs":"vue","commonjs2":"vue","root":"Vue"}
 var external_commonjs_vue_commonjs2_vue_root_Vue_ = __webpack_require__("8bbf");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader-v16/dist??ref--1-1!./src/components/SmartLoader.vue?vue&type=template&id=b1b6e708
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/vue-loader-v16/dist/templateLoader.js??ref--6!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader-v16/dist??ref--1-1!./src/App.vue?vue&type=template&id=73b6f037
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return Object(external_commonjs_vue_commonjs2_vue_root_Vue_["openBlock"])(), Object(external_commonjs_vue_commonjs2_vue_root_Vue_["createElementBlock"])("div");
 }
-// CONCATENATED MODULE: ./src/components/SmartLoader.vue?vue&type=template&id=b1b6e708
+// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=73b6f037
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader-v16/dist??ref--1-1!./src/components/SmartLoader.vue?vue&type=script&lang=js
-/* harmony default export */ var SmartLoadervue_type_script_lang_js = ({});
-// CONCATENATED MODULE: ./src/components/SmartLoader.vue?vue&type=script&lang=js
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader-v16/dist??ref--1-1!./src/App.vue?vue&type=script&lang=js
+/* harmony default export */ var Appvue_type_script_lang_js = ({
+  name: "App"
+});
+// CONCATENATED MODULE: ./src/App.vue?vue&type=script&lang=js
  
 // EXTERNAL MODULE: ./node_modules/vue-loader-v16/dist/exportHelper.js
 var exportHelper = __webpack_require__("6b0d");
 var exportHelper_default = /*#__PURE__*/__webpack_require__.n(exportHelper);
 
-// CONCATENATED MODULE: ./src/components/SmartLoader.vue
+// CONCATENATED MODULE: ./src/App.vue
 
 
 
 
 
-const __exports__ = /*#__PURE__*/exportHelper_default()(SmartLoadervue_type_script_lang_js, [['render',render]])
+const __exports__ = /*#__PURE__*/exportHelper_default()(Appvue_type_script_lang_js, [['render',render]])
 
-/* harmony default export */ var SmartLoader = (__exports__);
+/* harmony default export */ var App = (__exports__);
 // CONCATENATED MODULE: ./node_modules/@vue/cli-service/lib/commands/build/entry-lib.js
 
 
-/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (SmartLoader);
+/* harmony default export */ var entry_lib = __webpack_exports__["default"] = (App);
 
 
 
