@@ -245,7 +245,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_breeding_rhombus_spinner = resolveComponent("breeding-rhombus-spinner");
 
   return (openBlock(), createElementBlock("div", {
-    class: normalizeClass(["pg-spinner-container", {'show':_ctx.show}])
+    class: normalizeClass(["spinner-container", {'show':_ctx.show}])
   }, [
     createElementVNode("div", _hoisted_1, [
       createElementVNode("div", _hoisted_2, [

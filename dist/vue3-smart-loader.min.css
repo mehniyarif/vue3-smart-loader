@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900&display=swap");
-.pg-spinner-container {
+.spinner-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -8,7 +8,7 @@
   width: 100vw;
   display: none;
 }
-.pg-spinner-container.show {
+.spinner-container.show {
   display: flex;
   justify-content: center;
   align-items: center;

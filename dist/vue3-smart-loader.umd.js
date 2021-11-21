@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('vue'), require('epic-spinners')) :
   typeof define === 'function' && define.amd ? define(['exports', 'vue', 'epic-spinners'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Vue3SmartLoader = {}, global.vue, global.epicSpinners));
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Vue3SmartLoader = {}, global.Vue, global.epicSpinners));
 })(this, (function (exports, vue, epicSpinners) { 'use strict';
 
   var script = vue.defineComponent({ 
@@ -248,7 +248,7 @@
     var _component_breeding_rhombus_spinner = vue.resolveComponent("breeding-rhombus-spinner");
 
     return (vue.openBlock(), vue.createElementBlock("div", {
-      class: vue.normalizeClass(["pg-spinner-container", {'show':_ctx.show}])
+      class: vue.normalizeClass(["spinner-container", {'show':_ctx.show}])
     }, [
       vue.createElementVNode("div", _hoisted_1, [
         vue.createElementVNode("div", _hoisted_2, [

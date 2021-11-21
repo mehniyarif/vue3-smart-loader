@@ -1,5 +1,5 @@
 <template>
-  <div class="pg-spinner-container" :class="{'show':show}">
+  <div class="spinner-container" :class="{'show':show}">
     <div class="block" >
       <div class="flex justify-center">
         <flower-spinner
@@ -360,7 +360,7 @@ export default defineComponent({
 </script>
 <style lang="scss">
     @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900&display=swap");
-    .pg-spinner-container{
+    .spinner-container{
       position: fixed;
       top: 0;
       left: 0;
