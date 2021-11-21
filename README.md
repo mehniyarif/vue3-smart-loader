@@ -61,7 +61,7 @@ this.$spinner.flower(
             size:70, 
             color:”$f0f0f0”, 
             num:3, 
-            stopAfter:3000, 
+            stopAfter:30, 
             stopAfterText:”This Process Too Long”
 
         }
