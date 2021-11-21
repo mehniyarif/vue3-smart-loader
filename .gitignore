@@ -1,4 +1,5 @@
 .DS_Store
+!iceberg/static/icon
 node_modules
 
 
