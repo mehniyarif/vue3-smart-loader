@@ -9,6 +9,8 @@
 
 #### Import in main.js
 `import SmartLoader from "vue3-smart-loader"`
+<br/> and <br/>
+`require('vue3-smart-loader/dist/main.css')`
 #### Include with use method
 `createApp(App).use(SmartLoader).mount("#app");`</br>
 
