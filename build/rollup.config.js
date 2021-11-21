@@ -21,8 +21,11 @@ export default {
             css: true, // Dynamically inject css as a <style> tag
             compileTemplate: true, // Explicitly convert template to render function
         }),
-        scss(),
+        scss({
+            output: 'dist/main.css'
+        }),
         commonjs(),
+        
         buble({
             objectAssign: 'Object.assign'
         }), // Transpile to ES5
