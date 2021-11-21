@@ -1,15 +1,15 @@
 {
   "name": "vue3-smart-loader",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "main": "dist/Vue3SmartLoader.umd.js",
-  "module": "dist/Vue3SmartLoader.common.js",
+  "module": "dist/Vue3SmartLoader.umd.js",
   "unpkg": "dist/Vue3SmartLoader.umd.min.js",
   "browser": {
     "./sfc": "src/components/smart-loader"
   },
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --target lib --name Vue3SmartLoader src/components/smart-loader",
+    "build": "vue-cli-service build --target lib --name Vue3SmartLoader src/components/smart-loader/index.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

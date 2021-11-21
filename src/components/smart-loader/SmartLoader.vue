@@ -154,6 +154,7 @@ import { FlowerSpinner,PixelSpinner,HollowDotsSpinner,IntersectingCirclesSpinner
           FingerprintSpinner, SpringSpinner ,AtomSpinner ,LoopingRhombusesSpinner, BreedingRhombusSpinner} from 'epic-spinners';
 
 export default defineComponent({ 
+  name:"Vue3SmartLoader",
   components:{
       FlowerSpinner,
       PixelSpinner,
@@ -179,7 +180,7 @@ export default defineComponent({
     this.cnt = 0
     clearInterval(this.spinCounter)
   },
-  created(){
+  mounted(){
     this.reactivity()
   },
   props:{
