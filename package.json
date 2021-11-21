@@ -1,6 +1,6 @@
 {
   "name": "vue3-smart-loader",
-  "version": "0.1.3",
+  "version": "0.1.5",
   "main": "Vue3SmartLoader.umd.js",
   "scripts": {
     "serve": "vue-cli-service serve",

@@ -10,9 +10,7 @@
 #### Import in main.js
 `import SmartLoader from "vue3-smart-loader"`
 #### Include with use method
-`createApp(App)` </br>
-&nbsp; &nbsp;`.use(SmartLoader)`</br>
-&nbsp; &nbsp;`.mount("#app");`</br>
+`createApp(App).use(SmartLoader).mount("#app");`</br>
 
 #### And Use With this.$spinner
 
