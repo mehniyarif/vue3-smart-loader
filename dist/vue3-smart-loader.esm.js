@@ -1,42 +1,8 @@
-import { defineComponent, resolveComponent, openBlock, createElementBlock, normalizeClass, createElementVNode, createBlock, createCommentVNode, toDisplayString, createApp } from 'vue';
+import { defineComponent, resolveComponent, openBlock, createElementBlock, normalizeClass, createElementVNode, createBlock, createCommentVNode, toDisplayString, Fragment, renderList, createApp } from 'vue';
 import { FlowerSpinner, PixelSpinner, HollowDotsSpinner, IntersectingCirclesSpinner, OrbitSpinner, RadarSpinner, ScalingSquaresSpinner, HalfCircleSpinner, TrinityRingsSpinner, FulfillingSquareSpinner, CirclesToRhombusesSpinner, SemipolarSpinner, SelfBuildingSquareSpinner, SwappingSquaresSpinner, FulfillingBouncingCircleSpinner, FingerprintSpinner, SpringSpinner, AtomSpinner, LoopingRhombusesSpinner, BreedingRhombusSpinner } from 'epic-spinners';
 
-var script = defineComponent({ 
-  name:"Vue3SmartLoader",
-  components:{
-      FlowerSpinner: FlowerSpinner,
-      PixelSpinner: PixelSpinner,
-      HollowDotsSpinner: HollowDotsSpinner,
-      IntersectingCirclesSpinner: IntersectingCirclesSpinner,
-      OrbitSpinner: OrbitSpinner,RadarSpinner: RadarSpinner, 
-      ScalingSquaresSpinner: ScalingSquaresSpinner, 
-      HalfCircleSpinner: HalfCircleSpinner, 
-      TrinityRingsSpinner: TrinityRingsSpinner , 
-      FulfillingSquareSpinner: FulfillingSquareSpinner , 
-      CirclesToRhombusesSpinner: CirclesToRhombusesSpinner,
-      SemipolarSpinner: SemipolarSpinner, 
-      SelfBuildingSquareSpinner: SelfBuildingSquareSpinner, 
-      SwappingSquaresSpinner: SwappingSquaresSpinner, 
-      FulfillingBouncingCircleSpinner: FulfillingBouncingCircleSpinner,
-      FingerprintSpinner: FingerprintSpinner, 
-      SpringSpinner: SpringSpinner ,
-      AtomSpinner: AtomSpinner ,
-      LoopingRhombusesSpinner: LoopingRhombusesSpinner, 
-      BreedingRhombusSpinner: BreedingRhombusSpinner
-  },
-  unmounted: function unmounted(){
-    this.cnt = 0;
-    clearInterval(this.spinCounter);
-  },
-  mounted: function mounted(){
-    this.reactivity();
-  },
-  props:{
-    type:String,
-    options:Object,
-    destroy:Function
-  },
-  data: function data () {
+var Data = {
+    data: function data () {
     var this$1$1 = this;
 
     return {
@@ -46,6 +12,11 @@ var script = defineComponent({
       spinCounter:setInterval(function () {
         this$1$1.cnt +=1;
       }, 1000),
+      defaultActions:{
+        "page-reload": this.refreshPage,
+        "turn-off": this.turnOff,
+        "hang-on": function (){this$1$1.cnt= 0;}
+      },
       defaultOptions:{
           flower:{
             duration:2500,
@@ -153,7 +124,7 @@ var script = defineComponent({
       spinnerOptions:{
             duration:2500,
             size:70,
-            stopAfter:20,
+            stopAfter:10,
             stopAfterText:"This process will take a little long",
             color:"#ccc",
             num:null
@@ -166,61 +137,141 @@ var script = defineComponent({
                         "trinityRings","fulfillingSquare","circlesToRhombuses","semipolar","selfBuildingSquare","swappingSquares",
                         "fulfillingBouncingCircle","fingerprint","spring","atom","loopingRhombuses","breedingRhombus"],
     }
-  },
-  methods: {
-    reactivity: function reactivity () {
-      var this$1$1 = this;
-
-      this.cnt = 0;
-      this.show = true;
-      var fndIndex = this.kebabNames.findIndex(function (v) { return v == this$1$1.spinnerType; });
-      fndIndex = fndIndex ? fndIndex : 0;
-      var defaultOptions = {
-            duration: this.options && this.options.duration ? this.options.duration : this.defaultOptions[this.camelNames[fndIndex]].duration,
-            size: this.options && this.options.size ? this.options.size : this.defaultOptions[this.camelNames[fndIndex]].size,
-            color:this.options && this.options.color ? this.options.color : this.defaultOptions[this.camelNames[fndIndex]].color,
-            num: this.options && this.options.num ? this.options.num : this.defaultOptions[this.camelNames[fndIndex]].num,
-            stopAfter: this.options && this.options.stopAfter ? this.options.stopAfter : 20,
-            stopAfterText: this.options && this.options.stopAfterText ? this.options.stopAfterText : "This process will take a little long",
-      };
-      this.spinnerOptions = defaultOptions;
-
-      if (this.spinnerOptions.visibility) {
-        setTimeout(function () { this$1$1.close(); }, this.spinnerOptions.visibility);
-      }
-    },
-  close: function close(visibility){
-      var this$1$1 = this;
-
-      this.cnt = 0;
-
-       if(!visibility){
-          this.destroy();
-       }
-       
-      setTimeout(function () {
-          this$1$1.destroy();
-      }, visibility);
-       
-    },
-    refreshPage: function refreshPage(){
-        window.location.reload();
-    },
-    turnOff: function turnOff(){
-      this.destroy();
-    }
   }
+};
+
+var Methods = {
+    methods: {
+        reactivity: function reactivity () {
+          var this$1$1 = this;
+
+          this.cnt = 0;
+          this.show = true;
+          var fndIndex = this.kebabNames.findIndex(function (v) { return v == this$1$1.spinnerType; });
+          fndIndex = fndIndex ? fndIndex : 0;
+          var defaultOptions = {
+                duration: this.options && this.options.duration ? this.options.duration : this.defaultOptions[this.camelNames[fndIndex]].duration,
+                size: this.options && this.options.size ? this.options.size : this.defaultOptions[this.camelNames[fndIndex]].size,
+                color:this.options && this.options.color ? this.options.color : this.defaultOptions[this.camelNames[fndIndex]].color,
+                num: this.options && this.options.num ? this.options.num : this.defaultOptions[this.camelNames[fndIndex]].num,
+                stopAfter: this.options && this.options.stopAfter ? this.options.stopAfter : 20,
+                stopAfterText: this.options && this.options.stopAfterText ? this.options.stopAfterText : "This process will take a little long",
+          };
+          this.spinnerOptions = defaultOptions;
+    
+          if (this.spinnerOptions.visibility) {
+            setTimeout(function () { this$1$1.close(); }, this.spinnerOptions.visibility);
+          }
+        },
+      close: function close(visibility){
+          var this$1$1 = this;
+
+          this.cnt = 0;
+    
+           if(!visibility){
+              this.destroy();
+           }
+           
+          setTimeout(function () {
+              this$1$1.destroy();
+          }, visibility);
+           
+        },
+        refreshPage: function refreshPage(){
+            window.location.reload();
+        },
+        turnOff: function turnOff(){
+          this.destroy();
+        }
+      }
+};
+
+var Computed = {
+    computed: {
+        menuVisibility: function menuVisibility(){
+            var visibility = this.config && this.config.smartMenu && this.config.smartMenu.visibility;
+            var stopAfter =  this.config && this.config.smartMenu && this.config.smartMenu.stopAfter || this.spinnerOptions.stopAfter || 20;
+            if(visibility && this.cnt >= stopAfter){
+                return true
+            }
+            return false
+        },
+        stopAfterTitleText: function stopAfterTitleText(){
+            var stopAfterTitleText = this.config && this.config.smartMenu && this.config.smartMenu && this.config.smartMenu.texts && this.config.smartMenu.texts.title && this.config.smartMenu.texts.title.text;
+            return stopAfterTitleText ? stopAfterTitleText : this.spinnerOptions.stopAfterTitleText || "This process will take a little long"
+        },
+        stopAfterDescriptionText: function stopAfterDescriptionText(){
+            var stopAfterDescriptionText = this.config && this.config.smartMenu && this.config.smartMenu && this.config.smartMenu.texts && this.config.smartMenu.texts.description && this.config.smartMenu.texts.description.text;
+            return stopAfterDescriptionText ? stopAfterDescriptionText : this.spinnerOptions.stopAfterDescriptionText || null
+        },
+        stopAfterMeasureText: function stopAfterMeasureText(){
+            var stopAfterMeasureText = this.config && this.config.smartMenu && this.config.smartMenu && this.config.smartMenu.texts && this.config.smartMenu.texts.second && this.config.smartMenu.texts.second.text;
+            return stopAfterMeasureText ? stopAfterMeasureText : this.spinnerOptions.stopAfterMeasureText || "Second"
+        },
+        textTitleClass: function textTitleClass(){
+            var textClass = this.config && this.config.smartMenu && this.config.smartMenu && this.config.smartMenu.texts && this.config.smartMenu.texts.title && this.config.smartMenu.texts.title.class;
+            return textClass ? textClass : "smart-menu-default-title-text-class"
+        },
+        textDescriptionClass: function textDescriptionClass(){
+            var textDescriptionClass = this.config && this.config.smartMenu && this.config.smartMenu && this.config.smartMenu.texts && this.config.smartMenu.texts.description && this.config.smartMenu.texts.description.class;
+            return textDescriptionClass ? textDescriptionClass : "smart-menu-default-description-text-class"
+        },
+        textSecondClass: function textSecondClass(){
+            var textSecondClass = this.config && this.config.smartMenu && this.config.smartMenu && this.config.smartMenu.texts && this.config.smartMenu.texts.second && this.config.smartMenu.texts.second.class;
+            return textSecondClass ? textSecondClass : "smart-menu-default-second-text-class"
+        }
+    }
+};
+
+var script = defineComponent({ 
+  name:"Vue3SmartLoader",
+  mixins:[Data,Methods,Computed],
+  components:{
+      FlowerSpinner: FlowerSpinner,
+      PixelSpinner: PixelSpinner,
+      HollowDotsSpinner: HollowDotsSpinner,
+      IntersectingCirclesSpinner: IntersectingCirclesSpinner,
+      OrbitSpinner: OrbitSpinner,RadarSpinner: RadarSpinner, 
+      ScalingSquaresSpinner: ScalingSquaresSpinner, 
+      HalfCircleSpinner: HalfCircleSpinner, 
+      TrinityRingsSpinner: TrinityRingsSpinner , 
+      FulfillingSquareSpinner: FulfillingSquareSpinner , 
+      CirclesToRhombusesSpinner: CirclesToRhombusesSpinner,
+      SemipolarSpinner: SemipolarSpinner, 
+      SelfBuildingSquareSpinner: SelfBuildingSquareSpinner, 
+      SwappingSquaresSpinner: SwappingSquaresSpinner, 
+      FulfillingBouncingCircleSpinner: FulfillingBouncingCircleSpinner,
+      FingerprintSpinner: FingerprintSpinner, 
+      SpringSpinner: SpringSpinner ,
+      AtomSpinner: AtomSpinner ,
+      LoopingRhombusesSpinner: LoopingRhombusesSpinner, 
+      BreedingRhombusSpinner: BreedingRhombusSpinner
+  },
+  props:{
+    type:String,
+    options:Object,
+    config:Object,
+    destroy:Function
+  },
+  mounted: function mounted(){
+    this.reactivity();
+  },
+  unmounted: function unmounted(){
+    this.cnt = 0;
+    clearInterval(this.spinCounter);
+  }
+  
 });
 
 var _hoisted_1 = { class: "block" };
 var _hoisted_2 = { class: "flex justify-center" };
 var _hoisted_3 = {
   key: 0,
-  class: "block"
+  class: "d-block"
 };
-var _hoisted_4 = { class: "text-center stop-after-text" };
-var _hoisted_5 = { class: "text-center stop-after-text" };
-var _hoisted_6 = { class: "flex justify-center mt-10" };
+var _hoisted_4 = { class: "d-flex justify-content-center mt-5" };
+var _hoisted_5 = ["onClick"];
+var _hoisted_6 = ["onClick"];
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_flower_spinner = resolveComponent("flower-spinner");
@@ -393,31 +444,58 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                                                   }, null, 8 /* PROPS */, ["animation-duration", "size", "color"]))
                                                 : createCommentVNode("v-if", true)
       ]),
-      (_ctx.cnt >= this.spinnerOptions.stopAfter)
+      (_ctx.menuVisibility)
         ? (openBlock(), createElementBlock("div", _hoisted_3, [
-            createElementVNode("div", _hoisted_4, toDisplayString(_ctx.spinnerOptions.stopAfterText || "This process will take a little long"), 1 /* TEXT */),
-            createElementVNode("div", _hoisted_5, toDisplayString(_ctx.cnt) + " " + toDisplayString(_ctx.cnt > 1 ? 'seconds' : 'second'), 1 /* TEXT */),
-            createElementVNode("div", _hoisted_6, [
-              createElementVNode("button", {
-                onClick: _cache[0] || (_cache[0] = function () {
-                  var args = [], len = arguments.length;
-                  while ( len-- ) args[ len ] = arguments[ len ];
+            createElementVNode("div", {
+              class: normalizeClass(_ctx.textTitleClass)
+            }, toDisplayString(_ctx.stopAfterTitleText), 3 /* TEXT, CLASS */),
+            createElementVNode("div", {
+              class: normalizeClass(_ctx.textDescriptionClass)
+            }, toDisplayString(_ctx.stopAfterDescriptionText), 3 /* TEXT, CLASS */),
+            createElementVNode("div", {
+              class: normalizeClass(_ctx.textSecondClass)
+            }, toDisplayString(_ctx.cnt) + " " + toDisplayString(_ctx.stopAfterMeasureText), 3 /* TEXT, CLASS */),
+            createElementVNode("div", _hoisted_4, [
+              (_ctx.config && _ctx.config.smartMenu && _ctx.config.smartMenu.buttons && _ctx.config.smartMenu.buttons.length > 0)
+                ? (openBlock(true), createElementBlock(Fragment, { key: 0 }, renderList(_ctx.config.smartMenu.buttons, function (item, key) {
+                    return (openBlock(), createElementBlock(Fragment, { key: key }, [
+                      (item.type == 'custom')
+                        ? (openBlock(), createElementBlock("button", {
+                            key: 0,
+                            onClick: item.action,
+                            class: normalizeClass(item.class)
+                          }, toDisplayString(item.label), 11 /* TEXT, CLASS, PROPS */, _hoisted_5))
+                        : (openBlock(), createElementBlock("button", {
+                            key: 1,
+                            onClick: _ctx.defaultActions[item.type],
+                            class: normalizeClass(item.class)
+                          }, toDisplayString(item.label), 11 /* TEXT, CLASS, PROPS */, _hoisted_6))
+                    ], 64 /* STABLE_FRAGMENT */))
+                  }), 128 /* KEYED_FRAGMENT */))
+                : (openBlock(), createElementBlock(Fragment, { key: 1 }, [
+                    createElementVNode("button", {
+                      class: "btn btn-dark",
+                      onClick: _cache[0] || (_cache[0] = function () {
+                        var args = [], len = arguments.length;
+                        while ( len-- ) args[ len ] = arguments[ len ];
 
-                  return (_ctx.refreshPage && _ctx.refreshPage.apply(_ctx, args));
+                        return (_ctx.refreshPage && _ctx.refreshPage.apply(_ctx, args));
   })
-              }, "Page Reload"),
-              createElementVNode("button", {
-                class: "mr-2",
-                onClick: _cache[1] || (_cache[1] = function () {
-                  var args = [], len = arguments.length;
-                  while ( len-- ) args[ len ] = arguments[ len ];
+                    }, "Page Reload"),
+                    createElementVNode("button", {
+                      class: "btn btn-dark mx-2",
+                      onClick: _cache[1] || (_cache[1] = function () {
+                        var args = [], len = arguments.length;
+                        while ( len-- ) args[ len ] = arguments[ len ];
 
-                  return (_ctx.turnOff && _ctx.turnOff.apply(_ctx, args));
+                        return (_ctx.turnOff && _ctx.turnOff.apply(_ctx, args));
   })
-              }, "Just Turn Off Spinner"),
-              createElementVNode("button", {
-                onClick: _cache[2] || (_cache[2] = function ($event) { return (_ctx.cnt= 0); })
-              }, "Hang on!")
+                    }, "Just Turn Off Spinner"),
+                    createElementVNode("button", {
+                      class: "btn btn-dark",
+                      onClick: _cache[2] || (_cache[2] = function ($event) { return (_ctx.cnt= 0); })
+                    }, "Hang on!")
+                  ], 64 /* STABLE_FRAGMENT */))
             ])
           ]))
         : createCommentVNode("v-if", true)
@@ -428,14 +506,15 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
 script.render = render;
 script.__file = "src/components/smart-loader/SmartLoader.vue";
 
-function createLoading(type, options, props) {
+function createLoading(type, options, config, props) {
   var container = document.createElement('div');
   var loadingApp = createApp(
       script,
     Object.assign(props, {
       destroy: destroyApp,
       options: options,
-      type: type
+      type: type,
+      config: config
     })
   );
 
@@ -451,114 +530,116 @@ function createLoading(type, options, props) {
 }
 
 var Spinner;
+
 var index = {
   install: function install(app) {
-    function showLoading(type, options, props) {
-      var propsData = Object.assign({}, props);
-      Spinner = createLoading(type, options, propsData);
-    }
+    var this$1$1 = this;
 
+    function showLoading(type, options, config, props) {
+      var propsData = Object.assign({}, props);
+      Spinner = createLoading(type, options, config, propsData);
+    }
 
     var spinnerObj = {
         flower: function (options) {
             if ( options === void 0 ) options = {};
 
-            showLoading("flower", options);
+            showLoading("flower", options, this$1$1.config);
         },
         pixel: function (options) {
             if ( options === void 0 ) options = {};
 
-            showLoading("pixel", options);
+            showLoading("pixel", options, this$1$1.config);
         },
         hollowDots: function (options) {
             if ( options === void 0 ) options = {};
 
-            showLoading("hollow-dots", options);
+            showLoading("hollow-dots", options, this$1$1.config);
         },
         intersectingCircles: function (options) {
             if ( options === void 0 ) options = {};
 
-            showLoading("intersecting-circles", options);
+            showLoading("intersecting-circles", options, this$1$1.config);
         },
         orbit: function (options) {
             if ( options === void 0 ) options = {};
 
-            showLoading("orbit", options);
+            showLoading("orbit", options, this$1$1.config);
         },
         radar: function (options) {
             if ( options === void 0 ) options = {};
 
-            showLoading("radar", options);
+            showLoading("radar", options, this$1$1.config);
         },
         scalingSquares: function (options) {
             if ( options === void 0 ) options = {};
 
-            showLoading("scaling-squares", options);
+            showLoading("scaling-squares", options, this$1$1.config);
         },
         halfCircle: function (options) {
             if ( options === void 0 ) options = {};
 
-            showLoading("half-circle", options);
+            showLoading("half-circle", options, this$1$1.config);
         },
         trinityRings: function (options) {
             if ( options === void 0 ) options = {};
 
-            showLoading("trinity-rings", options);
+            showLoading("trinity-rings", options, this$1$1.config);
         },
         fulfillingSquare: function (options) {
             if ( options === void 0 ) options = {};
 
-            showLoading("fulfilling-square", options);
+            showLoading("fulfilling-square", options, this$1$1.config);
         },
         circlesToRhombuses: function (options) {
             if ( options === void 0 ) options = {};
 
-            showLoading("circles-to-rhombuses", options);
+            showLoading("circles-to-rhombuses", options, this$1$1.config);
         },
         semipolar: function (options) {
             if ( options === void 0 ) options = {};
 
-            showLoading("semipolar", options);
+            showLoading("semipolar", options, this$1$1.config);
         },
         selfBuildingSquare: function (options) {
             if ( options === void 0 ) options = {};
 
-            showLoading("self-building-square", options);
+            showLoading("self-building-square", options, this$1$1.config);
         },
         swappingSquares: function (options) {
             if ( options === void 0 ) options = {};
 
-            showLoading("swapping-squares", options);
+            showLoading("swapping-squares", options, this$1$1.config);
         },
         fulfillingBouncingCircle: function (options) {
             if ( options === void 0 ) options = {};
 
-            showLoading("fulfilling-bouncing-circle", options);
+            showLoading("fulfilling-bouncing-circle", options, this$1$1.config);
         },
         fingerprint: function (options) {
             if ( options === void 0 ) options = {};
 
-            showLoading("fingerprint", options);
+            showLoading("fingerprint", options, this$1$1.config);
         },
         spring: function (options) {
             if ( options === void 0 ) options = {};
 
-            showLoading("spring", options);
+            showLoading("spring", options, this$1$1.config);
         },
         atom: function (options) {
             if ( options === void 0 ) options = {};
 
-            showLoading("atom", options);
+            showLoading("atom", options, this$1$1.config);
         },
         loopingRhombuses: function (options) {
             if ( options === void 0 ) options = {};
 
-            showLoading("looping-rhombuses", options);
+            showLoading("looping-rhombuses", options, this$1$1.config);
         },
         breedingRhombus: function (options) {
             if ( options === void 0 ) options = {};
 
-            showLoading("breeding-rhombus", options);
+            showLoading("breeding-rhombus", options, this$1$1.config);
         },
         close: function () {
             Spinner.destroyApp();

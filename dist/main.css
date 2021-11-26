@@ -15,9 +15,30 @@
   z-index: 1000000000000000100;
 }
 
-.stop-after-text {
+.smart-menu-default-title-text-class {
   font-family: "Poppins", "Sans Serif";
   font-size: 17px;
+  opacity: 0.7;
+  margin-top: 10px;
+  text-align: center;
+  color: #ccc;
+  font-weight: 600;
+}
+
+.smart-menu-default-description-text-class {
+  font-family: "Poppins", "Sans Serif";
+  font-size: 14px;
+  opacity: 0.7;
+  margin-top: 10px;
+  text-align: center;
+  color: #ccc;
+  font-weight: 500;
+}
+
+.smart-menu-default-second-text-class {
+  font-family: "Poppins", "Sans Serif";
+  font-size: 17px;
+  text-align: center;
   opacity: 0.7;
   margin-top: 10px;
   color: #ccc;

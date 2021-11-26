@@ -25,7 +25,6 @@ export default {
             output: 'dist/main.css'
         }),
         commonjs(),
-        
         buble({
             objectAssign: 'Object.assign'
         }), // Transpile to ES5

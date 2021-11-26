@@ -140,7 +140,7 @@
           </div>
 
           <div class="d-flex justify-content-center mt-5">
-            <template v-if="config?.smartMenu?.buttons && config?.smartMenu?.buttons.length > 0">
+            <template v-if="config && config.smartMenu && config.smartMenu.buttons && config.smartMenu.buttons.length > 0">
               <template v-for="(item,key) in config.smartMenu.buttons" :key="key">
                   <button v-if="item.type == 'custom'"  @click="item.action" :class="item.class">{{item.label}}</button>
                   <button v-else  @click="defaultActions[item.type]" :class="item.class">{{item.label}}</button>
