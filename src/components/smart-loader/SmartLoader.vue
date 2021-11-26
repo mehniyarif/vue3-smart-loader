@@ -126,19 +126,31 @@
         />
         </div>
 
-        <div class="block" v-if="cnt >= this.spinnerOptions.stopAfter" >
-          <div class="text-center stop-after-text">
-            {{spinnerOptions.stopAfterText || "This process will take a little long"}}
+        <div class="d-block" v-if="menuVisibility" >
+          <div :class="textTitleClass">
+            {{stopAfterTitleText}}
           </div>
 
-          <div class="text-center stop-after-text">
-               {{cnt}} {{cnt > 1 ? 'seconds' : 'second'}}
+          <div :class="textDescriptionClass">
+            {{stopAfterDescriptionText}}
           </div>
 
-          <div class="flex justify-center mt-10">
-            <button @click="refreshPage">Page Reload</button>
-            <button class="mr-2" @click="turnOff">Just Turn Off Spinner</button>
-            <button @click="cnt= 0">Hang on!</button>
+          <div :class="textSecondClass">
+               {{cnt}} {{stopAfterMeasureText}}
+          </div>
+
+          <div class="d-flex justify-content-center mt-5">
+            <template v-if="config?.smartMenu?.buttons && config?.smartMenu?.buttons.length > 0">
+              <template v-for="(item,key) in config.smartMenu.buttons" :key="key">
+                  <button v-if="item.type == 'custom'"  @click="item.action" :class="item.class">{{item.label}}</button>
+                  <button v-else  @click="defaultActions[item.type]" :class="item.class">{{item.label}}</button>
+              </template>
+            </template>
+            <template v-else>
+              <button class="btn btn-dark" @click="refreshPage">Page Reload</button>
+              <button class="btn btn-dark mx-2" @click="turnOff">Just Turn Off Spinner</button>
+              <button class="btn btn-dark" @click="cnt= 0">Hang on!</button>
+            </template>
           </div>
 
         </div>
@@ -148,6 +160,9 @@
 </template>
 <script>
 import {defineComponent} from "vue"
+import Data from "./data"
+import Methods from "./methods"
+import Computed from "./computed"
 import { FlowerSpinner,PixelSpinner,HollowDotsSpinner,IntersectingCirclesSpinner,OrbitSpinner,RadarSpinner, 
           ScalingSquaresSpinner, HalfCircleSpinner, TrinityRingsSpinner , FulfillingSquareSpinner , CirclesToRhombusesSpinner,
           SemipolarSpinner, SelfBuildingSquareSpinner, SwappingSquaresSpinner, FulfillingBouncingCircleSpinner,
@@ -155,6 +170,7 @@ import { FlowerSpinner,PixelSpinner,HollowDotsSpinner,IntersectingCirclesSpinner
 
 export default defineComponent({ 
   name:"Vue3SmartLoader",
+  mixins:[Data,Methods,Computed],
   components:{
       FlowerSpinner,
       PixelSpinner,
@@ -176,188 +192,23 @@ export default defineComponent({
       LoopingRhombusesSpinner, 
       BreedingRhombusSpinner
   },
-  unmounted(){
-    this.cnt = 0
-    clearInterval(this.spinCounter)
+  props:{
+    type:String,
+    options:Object,
+    config:Object,
+    destroy:Function
   },
   mounted(){
     this.reactivity()
   },
-  props:{
-    type:String,
-    options:Object,
-    destroy:Function
-  },
-  data () {
-    return {
-      show:false,
-      spinnerType:this.type,
-      cnt:0,
-      spinCounter:setInterval(() => {
-        this.cnt +=1
-      }, 1000),
-      defaultOptions:{
-          flower:{
-            duration:2500,
-            size:70,
-            color:"#ccc"
-          },
-          pixel:{
-            duration:2000,
-            size:70,
-            color:"#ccc"
-          },
-          hollowDots:{
-            duration:1000,
-            size:15,
-            num:3,
-            color:"#ccc"
-          },
-          intersectingCircles:{
-            duration:1200,
-            size:70,
-            color:"#ccc"
-          },
-          orbit:{
-            duration:1200,
-            size:55,
-            color:"#ccc"
-          },
-          radar:{
-            duration:2000,
-            size:60,
-            color:"#ccc"
-          },
-          scalingSquares:{
-            duration:1250,
-            size:65,
-            color:"#ccc"
-          },
-          halfCircle:{
-            duration:1000,
-            size:60,
-            color:"#ccc"
-          } ,
-          trinityRings:{
-            duration:1500,
-            size:66,
-            color:"#ccc"
-          } ,
-          fulfillingSquare:{
-            duration:4000,
-            size:50,
-            color:"#ccc"
-          } ,
-          circlesToRhombuses:{
-            duration:1200,
-            size:15,
-            num:3,
-            color:"#ccc"
-          },
-          semipolar:{
-            duration:2000,
-            size:65,
-            color:"#ccc"
-          } ,
-          selfBuildingSquare:{
-            duration:6000,
-            size:40,
-            color:"#ccc"
-          } ,
-          swappingSquares:{
-            duration:1000,
-            size:65,
-            color:"#ccc"
-          } ,
-          fulfillingBouncingCircle:{
-            duration:4000,
-            size:60,
-            color:"#ccc"
-          },
-          fingerprint:{
-            duration:1500,
-            size:64,
-            color:"#ccc"
-          } ,
-          spring:{
-            duration:3000,
-            size:60,
-            color:"#ccc"
-          },
-          atom:{
-            duration:1000,
-            size:60,
-            color:"#ccc"
-          },
-          loopingRhombuses:{
-            duration:2500,
-            size:15,
-            color:"#ccc"
-          } ,
-          breedingRhombus:{
-            duration:2000,
-            size:65,
-            color:"#ccc"
-          },
-      },
-      spinnerOptions:{
-            duration:2500,
-            size:70,
-            stopAfter:20,
-            stopAfterText:"This process will take a little long",
-            color:"#ccc",
-            num:null
-      },
-      kebabNames:["flower","pixel","hollow-dots","intersecting-circles","orbit","radar","scaling-squares",
-                    "half-circle","trinity-rings","fulfilling-square","circles-to-rhombuses","semipolar",
-                    "self-building-square","swapping-squares","fulfilling-bouncing-circle","fingerprint",
-                    "spring","atom","looping-rhombuses","breeding-rhombus-spinner"],
-      camelNames:["flower","pixel","hollowDots","intersectingCircles","orbit","radar","scalingSquares","halfCircle",
-                        "trinityRings","fulfillingSquare","circlesToRhombuses","semipolar","selfBuildingSquare","swappingSquares",
-                        "fulfillingBouncingCircle","fingerprint","spring","atom","loopingRhombuses","breedingRhombus"],
-    }
-  },
-  methods: {
-    reactivity () {
-      this.cnt = 0
-      this.show = true
-      let fndIndex = this.kebabNames.findIndex(v => v == this.spinnerType)
-      fndIndex = fndIndex ? fndIndex : 0
-      let defaultOptions = {
-            duration: this.options && this.options.duration ? this.options.duration : this.defaultOptions[this.camelNames[fndIndex]].duration,
-            size: this.options && this.options.size ? this.options.size : this.defaultOptions[this.camelNames[fndIndex]].size,
-            color:this.options && this.options.color ? this.options.color : this.defaultOptions[this.camelNames[fndIndex]].color,
-            num: this.options && this.options.num ? this.options.num : this.defaultOptions[this.camelNames[fndIndex]].num,
-            stopAfter: this.options && this.options.stopAfter ? this.options.stopAfter : 20,
-            stopAfterText: this.options && this.options.stopAfterText ? this.options.stopAfterText : "This process will take a little long",
-      }
-      this.spinnerOptions = defaultOptions
-
-      if (this.spinnerOptions.visibility) {
-        setTimeout(() => { this.close() }, this.spinnerOptions.visibility)
-      }
-    },
-  close(visibility){
-      this.cnt = 0
-
-       if(!visibility){
-          this.destroy()
-       }
-       
-      setTimeout(() => {
-          this.destroy()
-      }, visibility);
-       
-    },
-    refreshPage(){
-        window.location.reload()
-    },
-    turnOff(){
-      this.destroy()
-    }
+  unmounted(){
+    this.cnt = 0
+    clearInterval(this.spinCounter)
   }
+  
 })
 </script>
+
 <style lang="scss">
     @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700,800,900&display=swap");
     .spinner-container{
@@ -375,9 +226,28 @@ export default defineComponent({
         z-index: 999999999999999999;
       }
     }
-    .stop-after-text{
+    .smart-menu-default-title-text-class{
        font-family: 'Poppins','Sans Serif';
        font-size: 17px;
+       opacity: .7;
+       margin-top: 10px;
+       text-align: center;
+       color: #ccc;
+       font-weight: 600;
+    }
+    .smart-menu-default-description-text-class{
+       font-family: 'Poppins','Sans Serif';
+       font-size: 14px;
+       opacity: .7;
+       margin-top: 10px;
+       text-align: center;
+       color: #ccc;
+       font-weight: 500;
+    }
+    .smart-menu-default-second-text-class{
+       font-family: 'Poppins','Sans Serif';
+       font-size: 17px;
+       text-align: center;
        opacity: .7;
        margin-top: 10px;
        color: #ccc;

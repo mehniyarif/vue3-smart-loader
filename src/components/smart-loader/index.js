@@ -3,14 +3,15 @@ import { createApp } from 'vue';
 import   Spinners from './SmartLoader.vue'
 
 
-function createLoading(type, options, props) {
+function createLoading(type, options, config, props) {
   const container = document.createElement('div');
   const loadingApp = createApp(
       Spinners,
     Object.assign(props, {
       destroy: destroyApp,
       options: options,
-      type: type
+      type: type,
+      config: config
     }),
   );
 
@@ -26,74 +27,74 @@ function createLoading(type, options, props) {
 }
 
 let Spinner;
+
 export default {
   install(app) {
-    function showLoading(type, options, props) {
+    function showLoading(type, options, config, props) {
       const propsData = { ...props };
-      Spinner = createLoading(type, options, propsData)
+      Spinner = createLoading(type, options, config, propsData)
     }
-
 
     const spinnerObj = {
         flower: (options = {}) => {
-            showLoading("flower", options)
+            showLoading("flower", options, this.config)
         },
         pixel: (options = {}) => {
-            showLoading("pixel", options)
+            showLoading("pixel", options, this.config)
         },
         hollowDots: (options = {}) => {
-            showLoading("hollow-dots", options)
+            showLoading("hollow-dots", options, this.config)
         },
         intersectingCircles: (options = {}) => {
-            showLoading("intersecting-circles", options)
+            showLoading("intersecting-circles", options, this.config)
         },
         orbit: (options = {}) => {
-            showLoading("orbit", options)
+            showLoading("orbit", options, this.config)
         },
         radar: (options = {}) => {
-            showLoading("radar", options)
+            showLoading("radar", options, this.config)
         },
         scalingSquares: (options = {}) => {
-            showLoading("scaling-squares", options)
+            showLoading("scaling-squares", options, this.config)
         },
         halfCircle: (options = {}) => {
-            showLoading("half-circle", options)
+            showLoading("half-circle", options, this.config)
         },
         trinityRings: (options = {}) => {
-            showLoading("trinity-rings", options)
+            showLoading("trinity-rings", options, this.config)
         },
         fulfillingSquare: (options = {}) => {
-            showLoading("fulfilling-square", options)
+            showLoading("fulfilling-square", options, this.config)
         },
         circlesToRhombuses: (options = {}) => {
-            showLoading("circles-to-rhombuses", options)
+            showLoading("circles-to-rhombuses", options, this.config)
         },
         semipolar: (options = {}) => {
-            showLoading("semipolar", options)
+            showLoading("semipolar", options, this.config)
         },
         selfBuildingSquare: (options = {}) => {
-            showLoading("self-building-square", options)
+            showLoading("self-building-square", options, this.config)
         },
         swappingSquares: (options = {}) => {
-            showLoading("swapping-squares", options)
+            showLoading("swapping-squares", options, this.config)
         },
         fulfillingBouncingCircle: (options = {}) => {
-            showLoading("fulfilling-bouncing-circle", options)
+            showLoading("fulfilling-bouncing-circle", options, this.config)
         },
         fingerprint: (options = {}) => {
-            showLoading("fingerprint", options)
+            showLoading("fingerprint", options, this.config)
         },
         spring: (options = {}) => {
-            showLoading("spring", options)
+            showLoading("spring", options, this.config)
         },
         atom: (options = {}) => {
-            showLoading("atom", options)
+            showLoading("atom", options, this.config)
         },
         loopingRhombuses: (options = {}) => {
-            showLoading("looping-rhombuses", options)
+            showLoading("looping-rhombuses", options, this.config)
         },
         breedingRhombus: (options = {}) => {
-            showLoading("breeding-rhombus", options)
+            showLoading("breeding-rhombus", options, this.config)
         },
         close: () => {
             Spinner.destroyApp()
