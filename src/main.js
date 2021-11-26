@@ -7,6 +7,7 @@ Object.assign(SmartLoader, {
         smartMenu: {
             visibility:true,
             stopAfter:3,
+            /*
             texts:{
                 title:{
                     text:"Galatasaray",
@@ -21,7 +22,7 @@ Object.assign(SmartLoader, {
                     class:"text-center"
                 }
             },
-            /* buttons:[
+             buttons:[
                 
                 {
                     label: "Just Turn Off Spinner",

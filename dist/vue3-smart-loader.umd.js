@@ -222,6 +222,15 @@
           textSecondClass: function textSecondClass(){
               var textSecondClass = this.config && this.config.smartMenu && this.config.smartMenu && this.config.smartMenu.texts && this.config.smartMenu.texts.second && this.config.smartMenu.texts.second.class;
               return textSecondClass ? textSecondClass : "smart-menu-default-second-text-class"
+          },
+          smartMenuContainer: function smartMenuContainer(){
+              return "smart-menu-default-container"
+          },
+          smartMenuSubContainer: function smartMenuSubContainer(){
+              return "smart-menu-default-sub-container"
+          },
+          smartMenuButton: function smartMenuButton(){
+              return "smart-menu-default-button"
           }
       }
   };
@@ -266,15 +275,8 @@
     
   });
 
-  var _hoisted_1 = { class: "block" };
-  var _hoisted_2 = { class: "flex justify-center" };
-  var _hoisted_3 = {
-    key: 0,
-    class: "d-block"
-  };
-  var _hoisted_4 = { class: "d-flex justify-content-center mt-5" };
-  var _hoisted_5 = ["onClick"];
-  var _hoisted_6 = ["onClick"];
+  var _hoisted_1 = ["onClick"];
+  var _hoisted_2 = ["onClick"];
 
   function render(_ctx, _cache, $props, $setup, $data, $options) {
     var _component_flower_spinner = vue.resolveComponent("flower-spinner");
@@ -301,8 +303,12 @@
     return (vue.openBlock(), vue.createElementBlock("div", {
       class: vue.normalizeClass(["spinner-container", {'show':_ctx.show}])
     }, [
-      vue.createElementVNode("div", _hoisted_1, [
-        vue.createElementVNode("div", _hoisted_2, [
+      vue.createElementVNode("div", {
+        class: vue.normalizeClass(_ctx.smartMenuContainer)
+      }, [
+        vue.createElementVNode("div", {
+          class: vue.normalizeClass(_ctx.smartMenuSubContainer)
+        }, [
           (_ctx.spinnerType == 'flower')
             ? (vue.openBlock(), vue.createBlock(_component_flower_spinner, {
                 key: 0,
@@ -446,9 +452,12 @@
                                                       color: _ctx.spinnerOptions.color
                                                     }, null, 8 /* PROPS */, ["animation-duration", "size", "color"]))
                                                   : vue.createCommentVNode("v-if", true)
-        ]),
+        ], 2 /* CLASS */),
         (_ctx.menuVisibility)
-          ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_3, [
+          ? (vue.openBlock(), vue.createElementBlock("div", {
+              key: 0,
+              class: vue.normalizeClass(_ctx.smartMenuContainer)
+            }, [
               vue.createElementVNode("div", {
                 class: vue.normalizeClass(_ctx.textTitleClass)
               }, vue.toDisplayString(_ctx.stopAfterTitleText), 3 /* TEXT, CLASS */),
@@ -458,7 +467,9 @@
               vue.createElementVNode("div", {
                 class: vue.normalizeClass(_ctx.textSecondClass)
               }, vue.toDisplayString(_ctx.cnt) + " " + vue.toDisplayString(_ctx.stopAfterMeasureText), 3 /* TEXT, CLASS */),
-              vue.createElementVNode("div", _hoisted_4, [
+              vue.createElementVNode("div", {
+                class: vue.normalizeClass(_ctx.smartMenuSubContainer)
+              }, [
                 (_ctx.config && _ctx.config.smartMenu && _ctx.config.smartMenu.buttons && _ctx.config.smartMenu.buttons.length > 0)
                   ? (vue.openBlock(true), vue.createElementBlock(vue.Fragment, { key: 0 }, vue.renderList(_ctx.config.smartMenu.buttons, function (item, key) {
                       return (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: key }, [
@@ -466,43 +477,43 @@
                           ? (vue.openBlock(), vue.createElementBlock("button", {
                               key: 0,
                               onClick: item.action,
-                              class: vue.normalizeClass(item.class)
-                            }, vue.toDisplayString(item.label), 11 /* TEXT, CLASS, PROPS */, _hoisted_5))
+                              class: vue.normalizeClass(item && item.class ? item.class : _ctx.smartMenuButton)
+                            }, vue.toDisplayString(item.label), 11 /* TEXT, CLASS, PROPS */, _hoisted_1))
                           : (vue.openBlock(), vue.createElementBlock("button", {
                               key: 1,
                               onClick: _ctx.defaultActions[item.type],
-                              class: vue.normalizeClass(item.class)
-                            }, vue.toDisplayString(item.label), 11 /* TEXT, CLASS, PROPS */, _hoisted_6))
+                              class: vue.normalizeClass(item && item.class ? item.class : _ctx.smartMenuButton)
+                            }, vue.toDisplayString(item.label), 11 /* TEXT, CLASS, PROPS */, _hoisted_2))
                       ], 64 /* STABLE_FRAGMENT */))
                     }), 128 /* KEYED_FRAGMENT */))
                   : (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 1 }, [
                       vue.createElementVNode("button", {
-                        class: "btn btn-dark",
+                        class: vue.normalizeClass(_ctx.smartMenuButton),
                         onClick: _cache[0] || (_cache[0] = function () {
                           var args = [], len = arguments.length;
                           while ( len-- ) args[ len ] = arguments[ len ];
 
                           return (_ctx.refreshPage && _ctx.refreshPage.apply(_ctx, args));
     })
-                      }, "Page Reload"),
+                      }, "Page Reload", 2 /* CLASS */),
                       vue.createElementVNode("button", {
-                        class: "btn btn-dark mx-2",
+                        class: vue.normalizeClass(_ctx.smartMenuButton),
                         onClick: _cache[1] || (_cache[1] = function () {
                           var args = [], len = arguments.length;
                           while ( len-- ) args[ len ] = arguments[ len ];
 
                           return (_ctx.turnOff && _ctx.turnOff.apply(_ctx, args));
     })
-                      }, "Just Turn Off Spinner"),
+                      }, "Just Turn Off Spinner", 2 /* CLASS */),
                       vue.createElementVNode("button", {
-                        class: "btn btn-dark",
+                        class: vue.normalizeClass(_ctx.smartMenuButton),
                         onClick: _cache[2] || (_cache[2] = function ($event) { return (_ctx.cnt= 0); })
-                      }, "Hang on!")
+                      }, "Hang on!", 2 /* CLASS */)
                     ], 64 /* STABLE_FRAGMENT */))
-              ])
-            ]))
+              ], 2 /* CLASS */)
+            ], 2 /* CLASS */))
           : vue.createCommentVNode("v-if", true)
-      ])
+      ], 2 /* CLASS */)
     ], 2 /* CLASS */))
   }
 

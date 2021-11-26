@@ -219,6 +219,15 @@ var Computed = {
         textSecondClass: function textSecondClass(){
             var textSecondClass = this.config && this.config.smartMenu && this.config.smartMenu && this.config.smartMenu.texts && this.config.smartMenu.texts.second && this.config.smartMenu.texts.second.class;
             return textSecondClass ? textSecondClass : "smart-menu-default-second-text-class"
+        },
+        smartMenuContainer: function smartMenuContainer(){
+            return "smart-menu-default-container"
+        },
+        smartMenuSubContainer: function smartMenuSubContainer(){
+            return "smart-menu-default-sub-container"
+        },
+        smartMenuButton: function smartMenuButton(){
+            return "smart-menu-default-button"
         }
     }
 };
@@ -263,15 +272,8 @@ var script = defineComponent({
   
 });
 
-var _hoisted_1 = { class: "block" };
-var _hoisted_2 = { class: "flex justify-center" };
-var _hoisted_3 = {
-  key: 0,
-  class: "d-block"
-};
-var _hoisted_4 = { class: "d-flex justify-content-center mt-5" };
-var _hoisted_5 = ["onClick"];
-var _hoisted_6 = ["onClick"];
+var _hoisted_1 = ["onClick"];
+var _hoisted_2 = ["onClick"];
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_flower_spinner = resolveComponent("flower-spinner");
@@ -298,8 +300,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (openBlock(), createElementBlock("div", {
     class: normalizeClass(["spinner-container", {'show':_ctx.show}])
   }, [
-    createElementVNode("div", _hoisted_1, [
-      createElementVNode("div", _hoisted_2, [
+    createElementVNode("div", {
+      class: normalizeClass(_ctx.smartMenuContainer)
+    }, [
+      createElementVNode("div", {
+        class: normalizeClass(_ctx.smartMenuSubContainer)
+      }, [
         (_ctx.spinnerType == 'flower')
           ? (openBlock(), createBlock(_component_flower_spinner, {
               key: 0,
@@ -443,9 +449,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                                                     color: _ctx.spinnerOptions.color
                                                   }, null, 8 /* PROPS */, ["animation-duration", "size", "color"]))
                                                 : createCommentVNode("v-if", true)
-      ]),
+      ], 2 /* CLASS */),
       (_ctx.menuVisibility)
-        ? (openBlock(), createElementBlock("div", _hoisted_3, [
+        ? (openBlock(), createElementBlock("div", {
+            key: 0,
+            class: normalizeClass(_ctx.smartMenuContainer)
+          }, [
             createElementVNode("div", {
               class: normalizeClass(_ctx.textTitleClass)
             }, toDisplayString(_ctx.stopAfterTitleText), 3 /* TEXT, CLASS */),
@@ -455,7 +464,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             createElementVNode("div", {
               class: normalizeClass(_ctx.textSecondClass)
             }, toDisplayString(_ctx.cnt) + " " + toDisplayString(_ctx.stopAfterMeasureText), 3 /* TEXT, CLASS */),
-            createElementVNode("div", _hoisted_4, [
+            createElementVNode("div", {
+              class: normalizeClass(_ctx.smartMenuSubContainer)
+            }, [
               (_ctx.config && _ctx.config.smartMenu && _ctx.config.smartMenu.buttons && _ctx.config.smartMenu.buttons.length > 0)
                 ? (openBlock(true), createElementBlock(Fragment, { key: 0 }, renderList(_ctx.config.smartMenu.buttons, function (item, key) {
                     return (openBlock(), createElementBlock(Fragment, { key: key }, [
@@ -463,43 +474,43 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
                         ? (openBlock(), createElementBlock("button", {
                             key: 0,
                             onClick: item.action,
-                            class: normalizeClass(item.class)
-                          }, toDisplayString(item.label), 11 /* TEXT, CLASS, PROPS */, _hoisted_5))
+                            class: normalizeClass(item && item.class ? item.class : _ctx.smartMenuButton)
+                          }, toDisplayString(item.label), 11 /* TEXT, CLASS, PROPS */, _hoisted_1))
                         : (openBlock(), createElementBlock("button", {
                             key: 1,
                             onClick: _ctx.defaultActions[item.type],
-                            class: normalizeClass(item.class)
-                          }, toDisplayString(item.label), 11 /* TEXT, CLASS, PROPS */, _hoisted_6))
+                            class: normalizeClass(item && item.class ? item.class : _ctx.smartMenuButton)
+                          }, toDisplayString(item.label), 11 /* TEXT, CLASS, PROPS */, _hoisted_2))
                     ], 64 /* STABLE_FRAGMENT */))
                   }), 128 /* KEYED_FRAGMENT */))
                 : (openBlock(), createElementBlock(Fragment, { key: 1 }, [
                     createElementVNode("button", {
-                      class: "btn btn-dark",
+                      class: normalizeClass(_ctx.smartMenuButton),
                       onClick: _cache[0] || (_cache[0] = function () {
                         var args = [], len = arguments.length;
                         while ( len-- ) args[ len ] = arguments[ len ];
 
                         return (_ctx.refreshPage && _ctx.refreshPage.apply(_ctx, args));
   })
-                    }, "Page Reload"),
+                    }, "Page Reload", 2 /* CLASS */),
                     createElementVNode("button", {
-                      class: "btn btn-dark mx-2",
+                      class: normalizeClass(_ctx.smartMenuButton),
                       onClick: _cache[1] || (_cache[1] = function () {
                         var args = [], len = arguments.length;
                         while ( len-- ) args[ len ] = arguments[ len ];
 
                         return (_ctx.turnOff && _ctx.turnOff.apply(_ctx, args));
   })
-                    }, "Just Turn Off Spinner"),
+                    }, "Just Turn Off Spinner", 2 /* CLASS */),
                     createElementVNode("button", {
-                      class: "btn btn-dark",
+                      class: normalizeClass(_ctx.smartMenuButton),
                       onClick: _cache[2] || (_cache[2] = function ($event) { return (_ctx.cnt= 0); })
-                    }, "Hang on!")
+                    }, "Hang on!", 2 /* CLASS */)
                   ], 64 /* STABLE_FRAGMENT */))
-            ])
-          ]))
+            ], 2 /* CLASS */)
+          ], 2 /* CLASS */))
         : createCommentVNode("v-if", true)
-    ])
+    ], 2 /* CLASS */)
   ], 2 /* CLASS */))
 }
 

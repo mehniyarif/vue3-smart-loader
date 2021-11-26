@@ -1,7 +1,7 @@
 <template>
   <div class="spinner-container" :class="{'show':show}">
-    <div class="block" >
-      <div class="flex justify-center">
+    <div :class="smartMenuContainer" >
+      <div :class="smartMenuSubContainer">
         <flower-spinner
           v-if="spinnerType == 'flower'"
           :animation-duration="spinnerOptions.duration"
@@ -126,7 +126,7 @@
         />
         </div>
 
-        <div class="d-block" v-if="menuVisibility" >
+        <div :class="smartMenuContainer" v-if="menuVisibility" >
           <div :class="textTitleClass">
             {{stopAfterTitleText}}
           </div>
@@ -139,17 +139,17 @@
                {{cnt}} {{stopAfterMeasureText}}
           </div>
 
-          <div class="d-flex justify-content-center mt-5">
+          <div :class="smartMenuSubContainer">
             <template v-if="config && config.smartMenu && config.smartMenu.buttons && config.smartMenu.buttons.length > 0">
               <template v-for="(item,key) in config.smartMenu.buttons" :key="key">
-                  <button v-if="item.type == 'custom'"  @click="item.action" :class="item.class">{{item.label}}</button>
-                  <button v-else  @click="defaultActions[item.type]" :class="item.class">{{item.label}}</button>
+                  <button v-if="item.type == 'custom'"  @click="item.action" :class="item && item.class ? item.class : smartMenuButton">{{item.label}}</button>
+                  <button v-else  @click="defaultActions[item.type]" :class="item && item.class ? item.class : smartMenuButton">{{item.label}}</button>
               </template>
             </template>
             <template v-else>
-              <button class="btn btn-dark" @click="refreshPage">Page Reload</button>
-              <button class="btn btn-dark mx-2" @click="turnOff">Just Turn Off Spinner</button>
-              <button class="btn btn-dark" @click="cnt= 0">Hang on!</button>
+              <button :class="smartMenuButton" @click="refreshPage">Page Reload</button>
+              <button :class="smartMenuButton" @click="turnOff">Just Turn Off Spinner</button>
+              <button :class="smartMenuButton" @click="cnt= 0">Hang on!</button>
             </template>
           </div>
 
@@ -232,7 +232,7 @@ export default defineComponent({
        opacity: .7;
        margin-top: 10px;
        text-align: center;
-       color: #ccc;
+       color: #212529;
        font-weight: 600;
     }
     .smart-menu-default-description-text-class{
@@ -241,7 +241,7 @@ export default defineComponent({
        opacity: .7;
        margin-top: 10px;
        text-align: center;
-       color: #ccc;
+       color: #212529;
        font-weight: 500;
     }
     .smart-menu-default-second-text-class{
@@ -250,15 +250,38 @@ export default defineComponent({
        text-align: center;
        opacity: .7;
        margin-top: 10px;
-       color: #ccc;
+       color: #212529;
        font-weight: 600;
     }
-
-    .flex{
-      display: flex;
+    .smart-menu-default-container{
+      display: block;
     }
-
-    .justify-center{
-      justify-content: center;
+    .smart-menu-default-sub-container{
+      display: flex;
+      justify-content: space-evenly;
+      margin-top: 15px;
+    }
+    .smart-menu-default-button{
+        display: inline-block;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212529;
+        text-align: center;
+        text-decoration: none;
+        vertical-align: middle;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+        margin-inline: 1px;
+        background-color: transparent;
+        border: 1px solid transparent;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        border-radius: 0.25rem;
+        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        color: #fff;
+        background-color: #212529;
+        border-color: #212529;
     }
 </style>

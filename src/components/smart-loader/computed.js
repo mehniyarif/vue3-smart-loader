@@ -31,6 +31,15 @@ export default {
         textSecondClass(){
             let textSecondClass = this.config && this.config.smartMenu && this.config.smartMenu && this.config.smartMenu.texts && this.config.smartMenu.texts.second && this.config.smartMenu.texts.second.class
             return textSecondClass ? textSecondClass : "smart-menu-default-second-text-class"
+        },
+        smartMenuContainer(){
+            return "smart-menu-default-container"
+        },
+        smartMenuSubContainer(){
+            return "smart-menu-default-sub-container"
+        },
+        smartMenuButton(){
+            return "smart-menu-default-button"
         }
     }
 }

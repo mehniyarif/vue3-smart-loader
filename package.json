@@ -1,6 +1,6 @@
 {
   "name": "vue3-smart-loader",
-  "version": "0.1.21",
+  "version": "0.1.22",
   "main": "dist/vue3-smart-loader.umd.js",
   "module": "dist/vue3-smart-loader.esm.js",
   "unpkg": "dist/vue3-smart-loader.min.js",
